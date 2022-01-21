@@ -12,7 +12,7 @@ height=30
 current_bots = []
 for i in range(5):
     P = Point2(random.randint(0,width-1),random.randint(0,height-1))
-    current_bots.append(bots.Bot(position=P))
+    current_bots.append(bots.WanderBot(position=P))
 
 n=0
 while True:
