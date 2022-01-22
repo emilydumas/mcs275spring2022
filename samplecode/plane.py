@@ -88,6 +88,12 @@ class Point2:
         else:
             return NotImplemented
 
+    def __eq__(self,other):
+        "Point equality means coordinate equality"
+        if not isinstance(other,Point2):
+            return NotImplemented
+        return self.x==other.x and self.y==other.y
+
     # self - other
     # -->
     # self.__sub__(other)
