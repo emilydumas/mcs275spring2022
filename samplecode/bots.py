@@ -20,7 +20,12 @@ class Bot:
 
     def __str__(self):
         """Human-readable string representation"""
-        return "{}(position=({},{}),alive={})".format(self.__class__.__name__,self.position.x,self.position.y,self.alive)
+        return "{}(position=({},{}),alive={})".format(
+            self.__class__.__name__,
+            self.position.x,
+            self.position.y,
+            self.alive
+        )
 
     def __repr__(self):
         """Unambiguous string representation"""
@@ -29,12 +34,21 @@ class Bot:
     def update(self):
         """Advance one time step (by doing nothing)"""
 
+
 class WanderBot(Bot):
     """A robot that wanders randomly"""
     steps = [ plane.Vector2(1,0), plane.Vector2(-1,0), plane.Vector2(0,1), plane.Vector2(0,-1) ]
     def update(self):
         """Take one random step"""
         self.move(random.choice(self.steps))
+
+
+class HorizontalWanderBot(WanderBot):
+    """A robot that wanders randomly along a horizontal line"""
+    # Because we inherit from WanderBot, all we need to do is
+    # change the value of class attribute `steps`.
+    steps = [ plane.Vector2(1,0), plane.Vector2(-1,0) ]
+
 
 class DestructBot(Bot):
     """A robot that sits for a while and then self-destructs"""
@@ -47,18 +61,26 @@ class DestructBot(Bot):
                  # is a Bot, not a DestructBot
         super().__init__(position)  # call constructor of Bot
         self.lifetime = lifetime
-        self.remaining_lifetime = self.lifetime
+        self.remaining = self.lifetime
         if self.lifetime <= 0:
             self.alive = False
 
-    # TODO: Add __str__
+    def __str__(self):
+        """Human-readable string representation"""
+        return "{}(position=({},{}),lifetime={},remaining={})".format(
+            self.__class__.__name__,
+            self.position.x,
+            self.position.y,
+            self.lifetime,
+            self.remaining
+        )
 
     def update(self):
         "Sit still and possibly self-destruct"
         if not self.alive:
             return
-        self.remaining_lifetime -= 1
-        if self.remaining_lifetime <= 0:
+        self.remaining -= 1
+        if self.remaining <= 0:
             # self-destruct
             self.alive = False
 
@@ -74,6 +96,17 @@ class PatrolBot(Bot):
         self.step = step
         self.numsteps = numsteps
         self.curstep = 0
+
+    def __str__(self):
+        """Human-readable string representation"""
+        return "{}(position=({},{}),step={},numsteps={},curstep={})".format(
+            self.__class__.__name__,
+            self.position.x,
+            self.position.y,
+            self.step,
+            self.numsteps,
+            self.curstep
+        )
 
     def update(self):
         "Take one step and possibly turn around"
