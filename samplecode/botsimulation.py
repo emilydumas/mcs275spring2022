@@ -14,6 +14,11 @@ for i in range(5):
     P = Point2(random.randint(0,width-1),random.randint(0,height-1))
     current_bots.append(bots.WanderBot(position=P))
 
+current_bots.append(bots.DestructBot(position=Point2(3,3),lifetime=5))
+current_bots.append(bots.DestructBot(position=Point2(1,28),lifetime=7))
+current_bots.append(
+    bots.PatrolBot(position=Point2(8,8),step=Vector2(1,1),numsteps=3)
+    )
 n=0
 while True:
     print("\n"*3*height)
@@ -25,7 +30,7 @@ while True:
             continue
         elif b.position.y < 0 or b.position.y >= height:
             continue
-        board[b.position.y][b.position.x] = "*"
+        board[b.position.y][b.position.x] = "*" # TODO: Mark each bot with a different letter!
     for row in board:
         print("".join(row))
     print("time={}".format(n))
