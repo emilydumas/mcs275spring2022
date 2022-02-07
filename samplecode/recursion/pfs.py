@@ -1,0 +1,29 @@
+"Paper folding sequence"
+# MCS 275 Spring 2022 Lecture 12
+
+# pfs(1)
+# 1
+
+# pfs(2)
+#  1       1   0
+#  pfs(1)  1   flip(pfs(1)^r)
+
+# pfs(3)
+# 110 1 100
+
+# pfs(4)
+# 110110011100100
+
+# pfs(5)
+# ...
+
+def pfs(n):
+    """
+    Return the paper folding sequence for
+    n folds.
+    """
+    if n == 1:
+        return [1]
+    prev = pfs(n-1)
+    return prev + [1] + [1-x for x in prev[::-1]]
+    
