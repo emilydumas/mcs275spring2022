@@ -14,4 +14,11 @@ def fact(n):
 
 def fact_iterative(n):
     "Factorial, but computed iteratively"
-    # TODO: add this
+    if n<0:
+        raise ValueError("Factorial only defined for nonnegative integers")
+    if n<=1:
+        return n
+    prod = 1
+    for i in range(2,n+1):
+        prod *= i
+    return prod
