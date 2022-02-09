@@ -22,8 +22,25 @@ def pfs(n):
     Return the paper folding sequence for
     n folds.
     """
+    if n < 0:
+        raise ValueError("PFS only defined for n>=0")
+    if n == 0:
+        return []
     if n == 1:
         return [1]
     prev = pfs(n-1)
     return prev + [1] + [1-x for x in prev[::-1]]
     
+
+def pfs_iterative(n):
+    """
+    Return the paper folding sequence for
+    n folds (using iteration).
+    """
+    if n < 0:
+        raise ValueError("PFS only defined for n>=0")
+    L = [] # unfolded piece of paper
+    for _ in range(n):
+        # fold the paper
+        L = L + [1] + [1-x for x in L[::-1]]
+    return L

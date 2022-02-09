@@ -17,7 +17,7 @@ def fact_iterative(n):
     if n<0:
         raise ValueError("Factorial only defined for nonnegative integers")
     if n<=1:
-        return n
+        return 1
     prod = 1
     for i in range(2,n+1):
         prod *= i
