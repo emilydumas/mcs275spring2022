@@ -206,6 +206,9 @@ def tohexcolor(rgbtuple):
     return "#{:02x}{:02x}{:02x}".format(r,g,b)
 
 if __name__=="__main__":
+    # Run as a script
+    # First command line argument gives the size (odd integer, default 31)
+    # Second command line argument gives output filename (SVG or PNG, defaults to write both as "random_maze.svg" and "random_maze.png")
     import sys
     if len(sys.argv) > 1:
         n = int(sys.argv[1])
@@ -213,11 +216,36 @@ if __name__=="__main__":
         n = 31
     print("Generating a random {}x{} maze".format(n,n))
     M = PrimRandomMaze(n,n)
-    M.save_svg("random_maze.svg")
-    print("Saved SVG")
+    
+    # Determine output filename and type to write (svg, png, both)
+    if len(sys.argv) > 2:
+        outfn = sys.argv[2]
+        if outfn.endswith(".svg"):
+            mode = "svg"
+        elif outfn.endswith(".png"):
+            mode = "png"
+        else:
+            print("Filename {} does not end with png or svg, so the output format is not known.".format(outfn))
+            exit(1)
+    else:
+        outfn = "random_maze.svg"
+        mode = "both"
+    
+    # Write image
+    
+    # SVG
+    if mode == "svg" or mode == "both":
+        M.save_svg(outfn)
+    print("Saved SVG file {}".format(outfn))
+
+    # PNG
     try:
-        M.save_png("random_maze.png",scale=10)
-        print("Saved PNG")
+        if mode == "both":
+            outfn = outfn[:-4] + ".png"
+        if mode == "png" or mode == "both":
+            M.save_png(outfn,scale=10)
+            print("Saved PNG file {}".format(outfn))
     except ImportError:
-        print("Not saving PNG maze image, because Pillow / PIL was not found.")
-        print("(Install it with a command like 'python3 -m pip install pillow')")
+        print("Tried to write a PNG file, but something went wrong.  This probably")
+        print("means that PIL/Pillow is not installed.  Install it with a command")
+        print("such as 'python3 -m pip install pillow' and try again.")
