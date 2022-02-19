@@ -58,7 +58,7 @@ class Maze:
         self.grid[y][x] = " "
 
     def set_blocked(self,x,y):
-        """Make the cell at (x,y) free"""
+        """Make the cell at (x,y) blocked"""
         self.insist_valid(x,y)
         self.grid[y][x] = "@"
 
