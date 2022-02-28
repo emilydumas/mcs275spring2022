@@ -14,8 +14,6 @@ class IntegerSetUL:
                 self.add(x)
 
     def add(self, x):
-        if x in self.data:
-            return
         if not isinstance(x, int):
             raise ValueError("Only integers supported")
         self.data.append(x)
@@ -100,3 +98,25 @@ class IntegerSet:
 
     def __repr__(self):
         return str(self)
+
+
+if __name__ == "__main__":
+    import random
+    import time
+
+    n = 20000
+    Linsert = [random.randint(1, 5 * n) for _ in range(n)]
+    Lcheck = [random.randint(1, 5 * n) for _ in range(n // 2)] + Linsert[: n // 2]
+    random.shuffle(Lcheck)
+
+    implementations = [IntegerSetUL, IntegerSetSL, IntegerSet]
+
+    for cls in implementations:
+        print("Testing {} with {} elements:".format(cls.__name__, n))
+        t0 = time.time()
+        S = cls(Linsert)
+        t1 = time.time()
+        checks = [x in S for x in Lcheck]
+        t2 = time.time()
+        print("{:.2f}s insert".format(t1 - t0))
+        print("{:.2f}s membership test".format(t2 - t1))
