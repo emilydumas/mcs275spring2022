@@ -1,0 +1,21 @@
+Work Snap
+CRUD - Create, Read, Update, Delete
+
+* Submitting a new work order
+(Create)
+
+* Work order status page (one per WO)
+(Read)
+
+* Worker home page
+(Read, Update)
+  - List of WO currently assigned to this user
+  - List of open WOs that can be taken by this user
+
+
+
+* Administrator home page
+  - List of every WO with various actions
+     . Edit
+     . Delete
+     . Reassign

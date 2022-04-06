@@ -1,0 +1,13 @@
+/* CSS HERE! */
+body {
+    font-family: "Verdana", sans-serif;
+    max-width: 45rem;
+    padding: 2rem;
+    margin: auto; /* centers the body */
+    background: #F0F0F0;
+    color: #080855;
+  }
+  p.button { /* p tags with class "button" */
+      background: #000000;
+      color: #FFFFFF;
+  }
