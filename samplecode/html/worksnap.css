@@ -1,13 +1,121 @@
 /* CSS HERE! */
 body {
-    font-family: "Verdana", sans-serif;
-    max-width: 45rem;
-    padding: 2rem;
-    margin: auto; /* centers the body */
-    background: #F0F0F0;
-    color: #080855;
-  }
-  p.button { /* p tags with class "button" */
-      background: #000000;
-      color: #FFFFFF;
-  }
+    font-family: "Helvetica", sans-serif;
+    max-width: 50rem;
+    padding: 1em;
+    margin: auto;
+    background: #FDD7AA;
+    color: #303030;
+}
+
+div {  /* by default, all DIVs have a lighter background */
+    background: #feefdd;
+}
+
+body > div {  /* Leave some margin and padding around top-level DIVs, i.e. those with parent BODY */
+    padding: 0.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+div.logo-header {  /* Special styling for the div containing the title (mostly invisible) */
+    text-align: center;
+    overflow:auto;
+    background: #FDD7AA;
+}
+
+div.logo-header h1 { /* Special font, background, and border for the title H1 */
+    background: #feefdd;
+    border: 3px solid #e4c299;
+    font-family: "Impact";
+    font-style: italic;
+    font-weight: normal;
+    font-size: 36pt;
+    width: auto;
+    margin: auto;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0.15em;
+    padding-right: 0.3em;
+    display: inline-block;
+}
+
+div.content-main h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;    
+}
+
+.wo-item {
+    border: 2px solid #e4c299;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.wo-item p {
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
+}
+
+.wo-title {
+    font-weight: bold;
+}
+
+.wo-metadata {
+    font-size: 75%;
+    color: #606060;
+}
+
+
+/*
+Any UL under wo-item is taken to be a container for some buttons.
+We cancel the usual bullets and indenting, and configure the text
+rendering to all caps, small caps, small type.
+*/  
+.wo-item ul {
+    padding-top:0.1em;
+    padding: 0;
+    margin: 0;
+    margin-top: 0.2em;
+    font-size: 80%;
+    display: inline-block;
+    text-transform: uppercase;
+    font-variant: small-caps;
+    font-size: 75%;
+    color: white;
+}
+
+/* li under wo-item is a button.  We make them go side-by-side (float...) with a dark background */
+.wo-item li {  
+    float: left;
+    list-style: none;
+    text-align: center;
+    padding: 0.4em;
+    margin-right:0.2em;
+    background: #666666;
+}
+
+/* Buttons are usually links, so we disable the blue underline in most browser defaults for A tags */
+.wo-item li a {
+    text-decoration: none;
+    color: white;
+}
+
+/* Background colors of specific buttons */
+
+li.btn-complete {
+    background: #556A55;
+}
+
+li.btn-unassign {
+    background: #9A8A33;
+}
+
+li.btn-take {
+    background: #44446C;
+}
