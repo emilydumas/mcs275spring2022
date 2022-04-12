@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Worker view for user {{ username }}</title>
+    <link rel="stylesheet" href="/static/worksnap.css">
+  </head>
+  <body>
+      <div class="logo-header">
+      <h1>WorkSnap</h1>
+      </div>
+
+      <div class="content-main">
+      <div>
+        <h2>Currently assigned to {{ username }}</h2>
+
+        <div class="wo-list">
+
+        {% for wo in currently_assigned %}
+          <div class="wo-item">
+            <p class="wo-title">{{ wo["description"] }}</p>
+            <p class="wo-metadata">WO #{{ wo["woid"] }} created {{ wo["datetime"] }}</p>
+            <ul>
+              <li class="btn-complete">Mark complete</li>
+              <li class="btn-unassign">Unassign</li>
+            </ul>
+          </div>
+        {% endfor %}
+
+        </div>
+      </div>
+
+      <div>
+        <h2>Unassigned &amp; available to {{ username }}</h2>
+
+        <div class="wo-list">
+          {% for wo in available %}
+            <div class="wo-item">
+              <p class="wo-title">{{ wo["description"] }}</p>
+              <p class="wo-metadata">WO #{{ wo["woid"] }} created {{ wo["datetime"] }}</p>
+              <ul>
+                  <li class="btn-take">Assign to me</li>
+              </ul>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
