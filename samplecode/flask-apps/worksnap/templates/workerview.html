@@ -38,7 +38,7 @@
               <p class="wo-title">{{ wo["description"] }}</p>
               <p class="wo-metadata">WO #{{ wo["woid"] }} created {{ wo["datetime"] }}</p>
               <ul>
-                  <li class="btn-take">Assign to me</li>
+                  <li class="btn-take"><a href="/wo/{{ wo["woid"] }}/assign_to/{{ username}}/">Assign to me</a></li>
               </ul>
             </div>
           {% endfor %}

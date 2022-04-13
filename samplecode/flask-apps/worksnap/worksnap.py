@@ -1,7 +1,8 @@
 # MCS 275 Spring 2022 Lecture 35 
 # Minimal Flask demo
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 import sqlite3
+import time
 
 app = Flask(__name__)
 
@@ -56,6 +57,52 @@ def workerview(username):
         available=available
     )
 
+@app.route("/wo/new/")
+def new_work_order_form():
+    return render_template("newworkorder.html")
+
+@app.route("/wo/post/",methods=["GET","POST"])
+def create_new_work_order():
+    con = sqlite3.connect("worksnap.db")
+    con.execute("""
+    INSERT INTO orders (description, time_created)
+    VALUES (?,?);
+    """,(
+        request.values.get("description"),
+        time.time()
+    ))
+    con.commit()
+    con.close()
+    return redirect("/wo/create/")  # FOR NOW, redirect back to the form.
+
+@app.route("/wo/<int:woid>/")
+def order_status(woid):
+    return "Placeholder"
+
+@app.route("/wo/<int:woid>/assign_to/<username>/")
+def order_assign(woid,username):
+    """
+    assign work order with id `woid` to user with
+    name `username`
+    """
+    con = sqlite3.connect("worksnap.db")
+    con.execute("""
+    UPDATE orders
+    SET assigned_to=?
+    WHERE woid=?
+    AND assigned_to IS NULL;
+    """, (username,woid))
+    con.commit()
+    con.close()
+    return redirect("/worker/{}/".format(username))
+
+@app.route("/wo/<int:woid>/unassign/")
+def order_unassign(woid):
+    return "Placeholder"
+
+@app.route("/wo/<int:woid>/complete/")
+def order_complete(woid):
+    return "Placeholder"
 
 app.run()  # Start the web server; I lost control from here on
 
