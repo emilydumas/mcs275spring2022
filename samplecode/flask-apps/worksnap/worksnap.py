@@ -6,6 +6,16 @@ import time
 
 app = Flask(__name__)
 
+@app.route("/")
+def front():
+    "Simple front page"
+    return """
+    <!doctype html>
+    <html><body>
+    <p>There's no front page.  Available views:</p>
+    <ul><li><a href="/worker/ddumas">Worker status page for ddumas</a></li><li><a href="/wo/new/">Create new work order</a></ul>
+    </body></html>"""
+
 @app.route("/worker/<username>/")
 def workerview(username):
     """Render the worker view template"""
