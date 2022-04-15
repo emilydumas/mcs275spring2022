@@ -20,12 +20,15 @@
             <p class="wo-title">{{ wo["description"] }}</p>
             <p class="wo-metadata">WO #{{ wo["woid"] }} created {{ wo["datetime"] }}</p>
             <ul>
-              <li class="btn-complete">Mark complete</li>
-              <li class="btn-unassign">Unassign</li>
+              <li class="btn-complete"><a href="/wo/{{ wo["woid"] }}/complete_by/{{ username}}/">Mark complete</a></li>
+              <li class="btn-unassign"><a href="/wo/{{ wo["woid"] }}/unassign_from/{{ username}}/">Unassign</a></li>
             </ul>
           </div>
+        {% else %}
+          <div class="wo-item">
+            <p class="placeholder">There are no currently-assigned orders.</p>
+          </div>
         {% endfor %}
-
         </div>
       </div>
 
@@ -40,6 +43,10 @@
               <ul>
                   <li class="btn-take"><a href="/wo/{{ wo["woid"] }}/assign_to/{{ username}}/">Assign to me</a></li>
               </ul>
+            </div>
+          {% else %}
+            <div class="wo-item">
+              <p class="placeholder">There are no available work orders.</p>
             </div>
           {% endfor %}
         </div>

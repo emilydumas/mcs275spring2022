@@ -71,6 +71,11 @@ div.content-main h2 {
     color: #606060;
 }
 
+.placeholder {
+    color: #606060;
+    font-style: italic;
+}
+
 
 /*
 Any UL under wo-item is taken to be a container for some buttons.
@@ -118,4 +123,9 @@ li.btn-unassign {
 
 li.btn-take {
     background: #44446C;
+}
+
+textarea.fullwidth {
+    width: 100%;
+    box-sizing: border-box; /* Needed so that 100% width still gives a right margin */
 }

@@ -59,10 +59,12 @@ def workerview(username):
 
 @app.route("/wo/new/")
 def new_work_order_form():
+    "Display the new work order form"
     return render_template("newworkorder.html")
 
 @app.route("/wo/post/",methods=["GET","POST"])
 def create_new_work_order():
+    "Insert a new work order based on form data"
     con = sqlite3.connect("worksnap.db")
     con.execute("""
     INSERT INTO orders (description, time_created)
@@ -73,11 +75,11 @@ def create_new_work_order():
     ))
     con.commit()
     con.close()
-    return redirect("/wo/create/")  # FOR NOW, redirect back to the form.
+    return redirect("/wo/create/")
 
 @app.route("/wo/<int:woid>/")
 def order_status(woid):
-    return "Placeholder"
+    return "This should be replaced with a page that shows information about work order #{}".format(woid)
 
 @app.route("/wo/<int:woid>/assign_to/<username>/")
 def order_assign(woid,username):
@@ -96,13 +98,40 @@ def order_assign(woid,username):
     con.close()
     return redirect("/worker/{}/".format(username))
 
-@app.route("/wo/<int:woid>/unassign/")
-def order_unassign(woid):
-    return "Placeholder"
+@app.route("/wo/<int:woid>/unassign_from/<username>/")
+def order_unassign(woid,username):
+    """
+    return work order `woid` to having no assignment, if it is    
+    currently assigned to worker `username`
+    """
+    con = sqlite3.connect("worksnap.db")
+    con.execute("""
+    UPDATE orders
+    SET assigned_to=NULL
+    WHERE woid=?
+    AND assigned_to=?;
+    """, (woid,username))
+    con.commit()
+    con.close()
+    return redirect("/worker/{}/".format(username))
 
-@app.route("/wo/<int:woid>/complete/")
-def order_complete(woid):
-    return "Placeholder"
+@app.route("/wo/<int:woid>/complete_by/<username>/")
+def order_complete(woid,username):
+    """
+    return work order `woid` to having no assignment, if it is    
+    currently assigned to worker `username`
+    """
+    con = sqlite3.connect("worksnap.db")
+    con.execute("""
+    UPDATE orders
+    SET completed=1
+    WHERE woid=?
+    AND assigned_to=?
+    AND completed=0;
+    """, (woid,username))
+    con.commit()
+    con.close()
+    return redirect("/worker/{}/".format(username))
 
-app.run()  # Start the web server; I lost control from here on
+app.run()  # Start the web server
 
