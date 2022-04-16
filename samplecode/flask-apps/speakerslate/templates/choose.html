@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Speaker information</title>
+    <link rel="stylesheet" href="/static/speakerslate.css">
+  </head>
+  <body>
+      <div class="logo-header">
+      <h1>SpeakerSlate Pro XP+ 2000</h1>
+      </div>
+
+      <div class="content-main">
+        <h2>Speaking times available for {{ username }}:</h2>
+        <ul>
+            {% for slot in available_slots %}
+            <li><a href="/assign/{{ slot["slotid"] }}/to/{{ username }}">
+                {{ slot["datetime"] }}
+            </a></li>
+            {% else %}
+            <li>Sorry, no slots are available. <a href="/">Return to main page.</a></li>
+            {% endfor %}
+        </ul>
+      </div>
+  </body>
+</html>

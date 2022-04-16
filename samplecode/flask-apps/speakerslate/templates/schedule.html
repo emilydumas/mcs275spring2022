@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Schedule</title>
+    <link rel="stylesheet" href="/static/speakerslate.css">
+  </head>
+  <body>
+      <div class="logo-header">
+      <h1>SpeakerSlate Pro XP+ 2000</h1>
+      </div>
+
+      <div class="content-main">
+        <h2>Scheduled lectures:</h2>
+        <ul>
+            {% for slot in scheduled_lectures %}
+            <li>{{ slot["datetime"] }} - {{ slot["speaker"] }}</li>
+            {% else %}
+            <li>No lectures have been scheduled yet.</li>
+            {% endfor %}
+        </ul>
+        <p><a href="/">Return to main page.</a></p>
+      </div>
+  </body>
+</html>

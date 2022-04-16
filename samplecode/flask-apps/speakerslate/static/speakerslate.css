@@ -1,0 +1,60 @@
+/* CSS HERE! */
+body {
+    font-family: "Helvetica", sans-serif;
+    max-width: 50rem;
+    padding: 1em;
+    margin: auto;
+    background: #202060;
+    color: #DDDDDD;
+}
+
+div {  /* by default, all DIVs have a lighter background */
+    background: #303070;
+}
+
+li {
+    margin-top: 0.5em;
+    margin-top: 0.5em;
+}
+
+form {
+    margin: 1em;
+}
+
+a {
+    color: #C0C0C0;
+}
+
+body > div {  /* Leave some margin and padding around top-level DIVs, i.e. those with parent BODY */
+    padding: 0.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    border: 3px solid #404080;
+}
+
+div.logo-header {  /* Special styling for the div containing the title (mostly invisible) */
+    text-align: center;
+    overflow:auto;
+    background: #202060;
+    border: 0;
+}
+
+div.logo-header h1 { /* Special font, background, and border for the title H1 */
+    background: #303070;
+    border: 3px solid #404080;
+    font-size: 36pt;
+    width: auto;
+    margin: auto;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0.15em;
+    padding-right: 0.3em;
+    display: inline-block;
+}
+
+div.content-main h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;    
+}
