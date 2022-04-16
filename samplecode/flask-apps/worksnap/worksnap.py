@@ -1,8 +1,9 @@
-# MCS 275 Spring 2022 Lecture 35 
-# Minimal Flask demo
+# MCS 275 Spring 2022 Lectures 35-38
+# Work order tracking system
 from flask import Flask, render_template, request, redirect
 import sqlite3
 import time
+import datetime
 
 app = Flask(__name__)
 
@@ -31,11 +32,12 @@ def workerview(username):
     # into the list of dictionaries expected by our template
     currently_assigned = []
     for row in res:
+        dtstr = datetime.datetime.fromtimestamp(row[2]).strftime("%Y-%m-%d %H:%M")
         currently_assigned.append(
             {
                 "description": row[1],
                 "woid": row[0],
-                "datetime": row[2],
+                "datetime": dtstr,
             }
         )
 
@@ -49,11 +51,12 @@ def workerview(username):
     # into the list of dictionaries expected by our template
     available = []
     for row in res:
+        dtstr = datetime.datetime.fromtimestamp(row[2]).strftime("%Y-%m-%d %H:%M")
         available.append(
             {
                 "description": row[1],
                 "woid": row[0],
-                "datetime": row[2],
+                "datetime": dtstr,
             }
         )
 
@@ -83,13 +86,45 @@ def create_new_work_order():
         request.values.get("description"),
         time.time()
     ))
+    res = con.execute("SELECT last_insert_rowid();")
+    # res should have one row it
+    # that row should one integer in it
+    # and that integer is the woid
+    # res.fetchone() # gets something like [275]
+    woid=res.fetchone()[0] # gets something like 275
     con.commit()
     con.close()
-    return redirect("/wo/create/")
+    return redirect("/wo/{}/".format(woid))  # what is woid?
 
 @app.route("/wo/<int:woid>/")
 def order_status(woid):
-    return "This should be replaced with a page that shows information about work order #{}".format(woid)
+    """
+    Show info about one work order
+    """
+    con = sqlite3.connect("worksnap.db")
+    res = con.execute("""
+    SELECT description,assigned_to,time_created,completed
+    FROM orders
+    WHERE woid=?;
+    """, [woid])
+    row = res.fetchone()
+    description = row[0]
+    assigned_to = row[1]
+    time_created = row[2]
+    completed = row[3]
+    if completed:
+        status = "Completed by {}".format(assigned_to)
+    elif assigned_to:
+        status = "Assigned to {}".format(assigned_to)
+    else:
+        status = "Open, not yet assigned to a worker"
+    return render_template(
+        "workorderstatus.html",
+        woid=woid,
+        description=description,
+        status=status,
+        datetime=datetime.datetime.fromtimestamp(time_created).strftime("%Y-%m-%d %H:%M")
+    )
 
 @app.route("/wo/<int:woid>/assign_to/<username>/")
 def order_assign(woid,username):
@@ -104,6 +139,13 @@ def order_assign(woid,username):
     WHERE woid=?
     AND assigned_to IS NULL;
     """, (username,woid))
+    res = con.execute("SELECT changes();")
+    num_rows_updated = res.fetchone()[0]
+    assert num_rows_updated <= 1
+    if num_rows_updated == 1:
+        print("SUCCESS!  Work order {} was assigned to {}.".format(woid,username))
+    elif num_rows_updated == 0:
+        print("FAILURE: Work order {} could not be assigned to {}.".format(woid,username))        
     con.commit()
     con.close()
     return redirect("/worker/{}/".format(username))

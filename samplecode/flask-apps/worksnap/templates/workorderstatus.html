@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Work order {{ woid }}</title>
+    <link rel="stylesheet" href="/static/worksnap.css">
+  </head>
+  <body>
+      <div class="logo-header">
+      <h1>WorkSnap</h1>
+      </div>
+
+      <div class="content-main">
+        <h2>Work order {{ woid }}: {{ description }}</h2>
+
+        <ul>
+            <li><strong>Created:</strong> {{ datetime }}</li>
+            <li><strong>Status:</strong> {{ status }}</li>
+        </ul>
+    </div>
+  </body>
+</html>
