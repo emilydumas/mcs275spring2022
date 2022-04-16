@@ -1,9 +1,12 @@
 # MCS 275 Spring 2022 Lectures 35-38
 # Work order tracking system
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, abort
 import sqlite3
 import time
 import datetime
+import os
+
+DBFILE="worksnap.db"
 
 app = Flask(__name__)
 
@@ -21,7 +24,7 @@ def front():
 def workerview(username):
     """Render the worker view template"""
 
-    con = sqlite3.connect("worksnap.db")
+    con = sqlite3.connect(DBFILE)
     res = con.execute("""
     SELECT woid, description, time_created
     FROM orders
@@ -78,7 +81,7 @@ def new_work_order_form():
 @app.route("/wo/post/",methods=["GET","POST"])
 def create_new_work_order():
     "Insert a new work order based on form data"
-    con = sqlite3.connect("worksnap.db")
+    con = sqlite3.connect(DBFILE)
     con.execute("""
     INSERT INTO orders (description, time_created)
     VALUES (?,?);
@@ -101,13 +104,19 @@ def order_status(woid):
     """
     Show info about one work order
     """
-    con = sqlite3.connect("worksnap.db")
+    con = sqlite3.connect(DBFILE)
     res = con.execute("""
     SELECT description,assigned_to,time_created,completed
     FROM orders
     WHERE woid=?;
     """, [woid])
     row = res.fetchone()
+    if row == None:
+        # No row returned => woid doesn't exist.  Return 404 NOT FOUND error
+        abort(404)
+
+    # If we end up here, it means the woid was found.  Unpack row data into
+    # named variables.
     description = row[0]
     assigned_to = row[1]
     time_created = row[2]
@@ -132,7 +141,7 @@ def order_assign(woid,username):
     assign work order with id `woid` to user with
     name `username`
     """
-    con = sqlite3.connect("worksnap.db")
+    con = sqlite3.connect(DBFILE)
     con.execute("""
     UPDATE orders
     SET assigned_to=?
@@ -156,7 +165,7 @@ def order_unassign(woid,username):
     return work order `woid` to having no assignment, if it is    
     currently assigned to worker `username`
     """
-    con = sqlite3.connect("worksnap.db")
+    con = sqlite3.connect(DBFILE)
     con.execute("""
     UPDATE orders
     SET assigned_to=NULL
@@ -173,7 +182,7 @@ def order_complete(woid,username):
     return work order `woid` to having no assignment, if it is    
     currently assigned to worker `username`
     """
-    con = sqlite3.connect("worksnap.db")
+    con = sqlite3.connect(DBFILE)
     con.execute("""
     UPDATE orders
     SET completed=1
@@ -184,6 +193,35 @@ def order_complete(woid,username):
     con.commit()
     con.close()
     return redirect("/worker/{}/".format(username))
+
+# Make sure the working directory is the directory that contains
+# this script file.  (Fixes some errors caused by running from
+# VS code, for example.)
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
+
+# Make sure database exists, creating it if not
+if not os.path.exists(DBFILE):
+    print("#####################################################################")
+    print("# Database file was not found.  Creating it and adding sample data. #")
+    print("#####################################################################")
+    con = sqlite3.connect(DBFILE)
+    con.execute("""
+    CREATE TABLE orders (
+            "woid" INTEGER PRIMARY KEY, 
+            "description" TEXT,
+            "assigned_to" TEXT,
+            "time_created" REAL,
+            completed INTEGER DEFAULT 0
+        );
+    """)
+    sampledata = [
+        ("Post attendance data to Blackboard",1649700951.0),
+        ("Hold office hours",1649700921.0),
+    ]
+    for desc,ts in sampledata:
+        con.execute("INSERT INTO orders (description,time_created) VALUES (?,?);",(desc,ts))
+    con.commit()
+    con.close()
 
 app.run()  # Start the web server
 
