@@ -1,4 +1,4 @@
-# MCS 275 Spring 2022 Lecture 35
+"SpeakerSlate: Flask app for speakers to reserve lecture times"
 from flask import Flask, render_template, request, redirect
 import os
 import sqlite3
