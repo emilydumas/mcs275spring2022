@@ -84,14 +84,17 @@ def showchoices():
     so that clicking the link will assign the speaking slot to
     this user.
     """
-    #############################################
-    #############################################
-    #####                                   #####
-    #####  WRITE THE BODY OF THIS FUNCTION  #####
-    #####                                   #####
-    #############################################
-    #############################################
-    return "This function hasn't been written yet!"
+    con = sqlite3.connect(DBFILE)
+    res = con.execute("SELECT slotid,datetime FROM schedule WHERE speaker IS NULL;")
+    available_slots = []
+    for row in res:
+        available_slots.append({"slotid": row[0], "datetime": row[1]})
+    con.close()
+    return render_template(
+        "choose.html",
+        username=request.values.get("username"),
+        available_slots=available_slots,
+    )
 
 
 @app.route("/assign/<int:slotid>/to/<username>/")
@@ -100,14 +103,11 @@ def assign_slot_to_person(slotid, username):
     Record that `username` is speaking at slot with id `slotid`,
     then redirect to the schedule page.
     """
-    #############################################
-    #############################################
-    #####                                   #####
-    #####  WRITE THE BODY OF THIS FUNCTION  #####
-    #####                                   #####
-    #############################################
-    #############################################
-    return "This function hasn't been written yet!"
+    con = sqlite3.connect(DBFILE)
+    con.execute("UPDATE schedule SET speaker=? WHERE slotid=?;", (username, slotid))
+    con.commit()
+    con.close()
+    return redirect("/schedule/")
 
 
 @app.route("/schedule/")
