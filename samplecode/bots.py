@@ -1,5 +1,5 @@
 """Classes representing robots in a simulation"""
-# MCS 275 Spring 2022 David Dumas
+# MCS 275 Spring 2022 Emily Dumas
 # Lecture 5
 
 import plane

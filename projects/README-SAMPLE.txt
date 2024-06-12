@@ -1,6 +1,6 @@
 # ScreamDeck
 
-MCS 275 Spring 2022 Project 4 by David Dumas
+MCS 275 Spring 2022 Project 4 by Emily Dumas
 
 ## Assignment
 

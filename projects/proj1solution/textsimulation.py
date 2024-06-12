@@ -1,4 +1,4 @@
-# MCS 275 Spring 2022 - Instructor David Dumas
+# MCS 275 Spring 2022 - Instructor Emily Dumas
 # Project 1 solution
 import os
 import sys

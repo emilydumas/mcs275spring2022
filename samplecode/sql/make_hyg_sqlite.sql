@@ -1,4 +1,4 @@
--- MCS 275 Spring 2022 - David Dumas
+-- MCS 275 Spring 2022 - Emily Dumas
 
 -- SQLite command line shell commands to convert hygdata_v3.csv from
 --     https://github.com/astronexus/HYG-Database/blob/master/hygdata_v3.csv?raw=true

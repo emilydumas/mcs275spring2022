@@ -1,5 +1,5 @@
 "Retrieve a URL and decode response as a string"
-# MCS 275 Spring 2022 David Dumas
+# MCS 275 Spring 2022 Emily Dumas
 from urllib.request import urlopen
 import sys
 

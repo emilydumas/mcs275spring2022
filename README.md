@@ -8,5 +8,5 @@ Some course documents (e.g. worksheets and quizzes) are also stored here as Jupy
 
 ## Contributors
 
-* [David Dumas](https://dumas.io) [(ddumas@uic.edu)](mailto:ddumas@uic.edu)  (instructor)
+* [Emily Dumas](https://dumas.io) [(ddumas@uic.edu)](mailto:ddumas@uic.edu)  (instructor)
 * Johnny Joyce (teaching assistant)

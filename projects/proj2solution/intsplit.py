@@ -1,6 +1,6 @@
 "Functions to enumerate splittings of an integer (supporting various constraints)"
 # MCS 275 Spring 2022 Project 2 Solution
-# David Dumas
+# Emily Dumas
 
 # See below for another method to implement `splittings`
 def splittings(n):

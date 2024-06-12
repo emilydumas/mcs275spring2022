@@ -1,5 +1,5 @@
 """Decorator example with an error (for debugging)"""
-# MCS 275 - David Dumas
+# MCS 275 - Emily Dumas
 
 def twice(f):
     """Decorator that replaces a function with a version

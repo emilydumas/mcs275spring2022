@@ -1,6 +1,6 @@
 """Broken tic-tac-toe game"""
 
-# MCS 275 Spring 2022 - David Dumas
+# MCS 275 Spring 2022 - Emily Dumas
 
 # Inspired by an example from https://github.com/satwikkansal/wtfpython#-a-tic-tac-toe-where-x-wins-in-the-first-attempt
 # Warning: link above contains major spoilers, as well as some crude language.

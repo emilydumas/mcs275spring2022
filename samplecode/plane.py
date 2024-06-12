@@ -1,7 +1,7 @@
 """2-dimensional vectors and points"""
 # MCS 275 Spring 2022 Lecture 4 and Project 3
 # THIS VERSION HAS THE UPDATES NEEDED FOR PROJECT 3!
-# David Dumas
+# Emily Dumas
 
 import math
 

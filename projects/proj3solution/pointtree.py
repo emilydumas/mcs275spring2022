@@ -1,5 +1,5 @@
 # MCS 275 Spring 2022 Project 3 Solution
-# David Dumas
+# Emily Dumas
 "Trisection search trees for points in the plane"
 
 class TST:

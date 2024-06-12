@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 "Retrieve a URL, displaying in terminal or saving to a file"
-# MCS 275 Spring 2022 David Dumas
+# MCS 275 Spring 2022 Emily Dumas
 from urllib.request import urlopen
 import argparse
 

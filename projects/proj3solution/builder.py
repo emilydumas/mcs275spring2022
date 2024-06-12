@@ -1,5 +1,5 @@
 # MCS 275 Spring 2022 Project 3 Solution
-# David Dumas
+# Emily Dumas
 import plane
 import pointtree
 import sys
